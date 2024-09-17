@@ -15,7 +15,7 @@ schtum.style.display = "none"
 snitch.style.display = "none"
 // restart.style.display = "none"
 
-const connection = new WebSocket("ws://localhost:8000");
+const connection = new WebSocket("https://prisoner-dilemma-server.onrender.com");
 
 connection.onopen = (event) => {
     console.log("WebSocket is open now.");
