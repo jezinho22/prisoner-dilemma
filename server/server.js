@@ -16,10 +16,12 @@ wsServer.on ('connection', function (connection) {
     console.log("Connection established")
     const userId = uuidv4()
     connection.id = userId
-    // still need to revise message to client to invite players
-    // currently sends state
-    // instead check state and send approp message
+
     invitePlayer(connection)
+    // trying to sort out how to send to the 'other player' by picking their id from clients
+    // or maybe attaching their connection to the state object
+
+    // console.log(wsServer.clients.forEach((client) => console.log(client.id)))
 
     // message received
     connection.on('message', function (message, userId) {
@@ -81,13 +83,39 @@ function addPlayer (connection, data) {
             console.log("New player one!")
             state.player1.name = data.newPlayer
             state.player1.id = connection.id
-            connection.send (JSON.stringify({status: "joined", message: data.newPlayer + ": You are player 1"}))
+            state.player1.connection = connection
+            const playerStatus = {
+                status: "joined", 
+                message: 
+                    {player1: state.player1.name, 
+                    player2: state.player2.name || "No Player 2 yet"}
+                }
+            //what if there is no connection for player2?
+
+            state.player1.connection.send(JSON.stringify(playerStatus))
+            if (state.player2.connection) {
+            state.player2.connection.send(JSON.stringify(playerStatus))
+            }
+
+            // otherPlayer.send(JSON.stringify({status: "joined", message:data.newPlayer + " is player 1"}))
         } else if (!state.player2.id) {
             console.log("New player two!")
             state.player2.name = data.newPlayer
-            state.player2.id = connection.id
-            connection.send (JSON.stringify({status: "joined", message: data.newPlayer + ": You are player 2"}))
+            state.player2.id = connection.id;
+            state.player2.connection = connection;
+            const playerStatus = {
+                status: "joined", 
+                message: 
+                    {player2: state.player2.name, 
+                    player1: state.player1.name || "No Player 1 yet"}
+                }
+                // aha - send no player 2 yet to EVERYONE
+                // and also break down what is received with status
+                // refactor all this to work with whatever is sent from server
+            state.player1.connection.send(JSON.stringify(playerStatus))
+            state.player2.connection.send(JSON.stringify(playerStatus))
         }
+
 }
 
 function manageDecision (connection, data) {

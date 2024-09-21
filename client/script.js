@@ -1,3 +1,5 @@
+const player1 = document.querySelector('.player1 div')
+const player2 = document.querySelector('.player2 div')
 const form = document.querySelector('form')
 const schtum = document.querySelector("#schtum")
 const snitch = document.querySelector("#snitch")
@@ -15,7 +17,7 @@ schtum.style.display = "none"
 snitch.style.display = "none"
 // restart.style.display = "none"
 
-const connection = new WebSocket("https://prisoner-dilemma-server.onrender.com");
+const connection = new WebSocket("ws://localhost:8000")// || "https://prisoner-dilemma-server.onrender.com");
 
 connection.onopen = (event) => {
     console.log("WebSocket is open now.");
@@ -31,7 +33,12 @@ connection.onmessage = (response) => {
     }
 
     if (message.status) {
+        console.log(message)
         showPlayerName(message)
+    }
+
+    if (message.otherPlayer) {
+        addPara(message.otherPlayer, "playerName")
     }
 
     if (message.decision) {
@@ -91,6 +98,7 @@ function reset () {
 }
 
 function showForm (message) {
+    // check if there is space for another player
     if (message.spaceForPlayers.space) {
         console.log("message.spaceForPlayers: ", message.spaceForPlayers)
 
@@ -109,7 +117,10 @@ function showPlayerName (message) {
     form.style.display = "none"
     console.log("playerName message: ", message)
 
-    addPara(message.message, "playerName")
+    console.log(player1.textContent)
+
+    player1.textContent = "Woah!" //message.player1.name
+    player2.textContent = "Wassup!" //message.player2.name
 
     if (message.status == "joined") {
         schtum.style.display = 'block'
