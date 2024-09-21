@@ -117,10 +117,8 @@ function showPlayerName (message) {
     form.style.display = "none"
     console.log("playerName message: ", message)
 
-    console.log(player1.textContent)
-
-    player1.textContent = "Woah!" //message.player1.name
-    player2.textContent = "Wassup!" //message.player2.name
+    player1.textContent = message.message.player1 //message.player1.name
+    player2.textContent = message.message.player2 //message.player2.name
 
     if (message.status == "joined") {
         schtum.style.display = 'block'
