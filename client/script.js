@@ -22,7 +22,7 @@ snitch.style.display = "none"
 // instructions.style.display = "none"
 // restart.style.display = "none"
 
-const connection = new WebSocket("ws://localhost:8000")// || "https://prisoner-dilemma-server.onrender.com");
+const connection = new WebSocket("https://prisoner-dilemma-server.onrender.com");
 
 connection.onopen = (event) => {
     console.log("WebSocket is open now.");
