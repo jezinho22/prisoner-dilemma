@@ -15,6 +15,26 @@ h1, h3{
 
 }
 
+.instructions {
+    background-color: #632B30;
+    color: #F3C98B;
+    padding: 0.25rem 1rem;
+    min-width: 20px;
+    margin-left: 1rem;
+    border: none;
+    box-shadow: 2px 2px 2px #956d31;
+    border-radius: 4px;
+}
+
+/* toggle pair to hide/show instructions */
+.show-instructions {
+    padding: 1rem;
+    display: block
+}
+.hide-instructions {
+    display: none;
+}
+
 .main {
     background-color: #F3C98B;
 
@@ -24,9 +44,7 @@ h1, h3{
 
 }
 
-.text {
-    padding: 1rem;
-}
+
 
 .player-container {
     display: flex;
