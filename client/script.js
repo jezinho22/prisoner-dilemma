@@ -5,16 +5,21 @@ const schtum = document.querySelector("#schtum")
 const snitch = document.querySelector("#snitch")
 const restart = document.querySelector("#restart")
 const feed = document.querySelector(".feed")
+const instructionsButton = document.querySelector(".instructions")
+const instructions = document.querySelector("#instructions")
 
+instructionsButton.addEventListener("click", handleInstructions)
 form.addEventListener("submit", handleSubmit)
 schtum.addEventListener("click", handleClick)
 snitch.addEventListener("click", handleClick)
 restart.addEventListener("click", handleRestart)
 
+
 // hide buttons until joined game
 form.style.display = "none"
 schtum.style.display = "none"
 snitch.style.display = "none"
+// instructions.style.display = "none"
 // restart.style.display = "none"
 
 const connection = new WebSocket("ws://localhost:8000")// || "https://prisoner-dilemma-server.onrender.com");
@@ -59,6 +64,11 @@ connection.onmessage = (response) => {
     }
 
 
+}
+
+function handleInstructions () {
+    instructions.classList.toggle("hide-instructions")
+    instructions.classList.toggle("show-instructions")
 }
 
 function handleSubmit(event) {
