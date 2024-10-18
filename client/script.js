@@ -84,7 +84,7 @@ function handleClick (event){
     // check if player has already made a decision
     if (event.target.id == "schtum") {
         connection.send(JSON.stringify({decision:"schtum"}))
-    } else if (event.target.id == "snitch") {
+    } else if (event.target.id === "snitch") {
         connection.send(JSON.stringify({decision:"snitch"}))
     }
     addPara(`Your decision is: ${event.target.id}. Waiting for the other prisoner to decide.`, "decision")
